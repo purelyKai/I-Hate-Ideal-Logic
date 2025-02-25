@@ -1,20 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Ideal Logic Reimbursement Request Form Filler",
+  "name": "Ideal Logic Reimbursement Form Filler",
   "version": "1.0",
-  "description": "Automatically selects options and fills the reimbursement request form on Ideal Logic at Oregon State Univeristy.",
+  "description": "Automatically selects options and fills the reimbursement request form on Ideal Logic at Oregon State University.",
   "permissions": ["scripting", "activeTab"],
   "host_permissions": ["https://apps.ideal-logic.com/*"],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
-  "content_scripts": [
-    {
-      "matches": ["https://apps.ideal-logic.com/*"],
-      "js": ["content.js"],
-      "run_at": "document_idle"
-    }
-  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -22,5 +16,12 @@
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     }
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://apps.ideal-logic.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
 }
