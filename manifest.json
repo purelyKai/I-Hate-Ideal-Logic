@@ -4,14 +4,15 @@
   "version": "1.0",
   "description": "Automatically selects options and fills the reimbursement request form on Ideal Logic at Oregon State Univeristy.",
   "permissions": ["scripting", "activeTab"],
-  "host_permissions": ["*://apps.ideal-logic.com/osusli"],
+  "host_permissions": ["https://apps.ideal-logic.com/*"],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
-      "matches": ["*://apps.ideal-logic.com/osusli"],
-      "js": ["content.js"]
+      "matches": ["https://apps.ideal-logic.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
     }
   ],
   "action": {

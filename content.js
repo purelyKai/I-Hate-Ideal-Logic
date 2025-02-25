@@ -1,10 +1,10 @@
-// Map options to their corresponding values
-const optionValues = {
-  option1: "QTCN-HY428", // RSO Payment Authorization
-  option2: "NSS5-PR8ZJ", // RSO Credit Card Request
-};
+function fillFormBasedOnOption(selectedOption) {
+  // Map options to their corresponding values
+  const optionValues = {
+    option1: "QTCN-HY428", // RSO Payment Authorization
+    option2: "NSS5-PR8ZJ", // RSO Credit Card Request
+  };
 
-export default function fillFormBasedOnOption(selectedOption) {
   // Get the corresponding value for the selected option
   const selectedValue = optionValues[selectedOption];
 
@@ -52,6 +52,8 @@ export default function fillFormBasedOnOption(selectedOption) {
       console.log("⏳ Next button not ready yet...");
     }
   });
+
+  observer.observe(document.body, { childList: true, subtree: true });
 }
 
 function waitForNextPage(selectedOption) {
@@ -84,3 +86,15 @@ function fillNextPageForRSOCreditCardRequest() {
   console.log("✅ Filling the second page for RSO Credit Card Request...");
   // Add form-filling logic for RSO Credit Card Request
 }
+
+// Listen for messages from popup.js
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "ping") {
+    sendResponse({ status: "ready" }); // Respond to let popup.js know content.js is loaded
+    return;
+  }
+
+  if (message.action === "fillForm") {
+    fillFormBasedOnOption(message.option);
+  }
+});
